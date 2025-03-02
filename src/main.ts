@@ -1,6 +1,15 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { provideRouter, Routes } from '@angular/router';
+import { importProvidersFrom } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
+import { BoardingsComponent } from './app/components/boardings/boardings.component';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+const routes: Routes = [
+  { path: '', redirectTo: '/boardings', pathMatch: 'full' },
+  { path: 'boardings', component: BoardingsComponent },
+];
+
+bootstrapApplication(AppComponent, {
+  providers: [importProvidersFrom(HttpClientModule), provideRouter(routes)],
+});
