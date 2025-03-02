@@ -16,7 +16,7 @@ export class BoardingsComponent implements OnInit {
   totalElements = 0;
   pageSize = 1000;
   page = 0;
-  passengerIds: string[] = ["mert", "kadir"];
+  passengerIds: string[] = [];
   private boardingsService = inject(BoardingsService);
 
   ngOnInit(): void {
@@ -33,5 +33,27 @@ export class BoardingsComponent implements OnInit {
       this.boardings = data.content;
       this.totalElements = data.numberOfElements
     });
+  }
+
+  addPassengerId(passengerId: string): void {
+    if (passengerId.length === 0) {
+      return;
+    }
+
+    if (this.passengerIds.find(id => id === passengerId)) {
+      return;
+    }
+    this.passengerIds.push(passengerId);
+    this.loadBoardings();
+  }
+
+  removePassengerId(passengerId: string): void {
+    this.passengerIds = this.passengerIds.filter(id => id !== passengerId);
+    this.loadBoardings();
+  }
+
+  clearPassengerIds(): void {
+    this.passengerIds = [];
+    this.loadBoardings();
   }
 }

@@ -1,8 +1,30 @@
-<h2>Boardings List - {{totalElements}} - {{pageSize}} of page {{page}}</h2>
-
-
-<ul>
-  <li *ngFor="let boarding of boardings">
-    {{ boarding.id }} - {{boarding.passengerId}}
-  </li>
-</ul>
+<div style="display: flex; flex-direction: column; align-items: center;">
+  <div>
+    <h2>Boardings List - {{totalElements}} - {{pageSize}} of page {{page}}</h2>
+  </div>
+  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column;">
+      <ul>
+        <li *ngFor="let boarding of boardings">
+          {{ boarding.id }} - {{boarding.passengerId}}
+        </li>
+      </ul>
+    </div>
+    <div style="flex: 1;"></div>
+    <div>
+      <div>
+        <button *ngIf="passengerIds.length > 0" (click)="clearPassengerIds()">ClearAll</button>
+        <ul>
+          <li *ngFor="let id of passengerIds">
+            {{ id }}
+            <button (click)="removePassengerId(id)">x</button>
+          </li>
+        </ul>
+      </div>
+      <div style="display: flex; flex-direction: row;">
+        <input #passengerIdInput type="text" placeholder="Enter Passenger ID" (keydown.enter)="addPassengerId(passengerIdInput.value)" />
+        <button (click)="addPassengerId(passengerIdInput.value)">Add Passenger</button>
+      </div>
+    </div>
+  </div>
+</div>
