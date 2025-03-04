@@ -26,4 +26,8 @@ export class CreateBoardingDrawerComponent {
   close(): void {
     this.visible = false;
   }
+
+  submit(): void {
+    console.log('submit');
+  }
 }
