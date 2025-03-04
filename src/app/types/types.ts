@@ -59,3 +59,7 @@ export type GetBoardingTypes_WC_MLS_Response = {
   id: string;
   name: string;
 }
+
+export type CreateBoardingType_WC_MLS_Request = {
+  name: string;
+}

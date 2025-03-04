@@ -33,7 +33,7 @@ export class BoardingTypeSelectComponent implements OnInit, ControlValueAccessor
   }
 
   loadBoardingTypes(): void {
-    this.boardingTypeService.getBoardings({
+    this.boardingTypeService.getBoardingTypes({
       page: 0,
       size: 1000
     }).subscribe((data) => {
