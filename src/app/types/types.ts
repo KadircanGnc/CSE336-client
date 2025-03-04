@@ -87,3 +87,13 @@ export type CreateLine_WC_MLS_Request = {
   lineCode: string;
   lineCodeRepresentation: string;
 };
+
+export type CreateDirection_WC_MLS_Request = {
+  name: string;
+};
+
+export type GetDirections_WC_MLS_Response = {
+  id: string;
+  name: string;
+};
+
