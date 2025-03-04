@@ -63,3 +63,16 @@ export type GetBoardingTypes_WC_MLS_Response = {
 export type CreateBoardingType_WC_MLS_Request = {
   name: string;
 }
+
+export type CreateBusStop_WC_MLS_Request = {
+  stopName: string;
+  latitude: number;
+  longitude: number;
+}
+
+export type GetBusStops_WC_MLS_Response = {
+  id: string;
+  stopName: string;
+  latitude: number;
+  longitude: number;
+}
