@@ -1,0 +1,70 @@
+:root {
+  /* Light theme (default) */
+  --primary-bg: #f8f9fa;
+  --secondary-bg: #e9ecef;
+  --text-color: #212529;
+  --border-color: #dee2e6;
+  
+
+  /* Theme colors - light mode */
+  --light-red: rgb(255, 59, 48);
+  --light-orange: rgb(255, 149, 0);
+  --light-yellow: rgb(255, 204, 0);
+  --light-green: rgb(52, 199, 89);
+  --light-mint: rgb(0, 199, 190);
+  --light-teal: rgb(48, 176, 199);
+  --light-cyan: rgb(50, 173, 230);
+  --light-blue: rgb(0, 122, 255);
+  --light-indigo: rgb(88, 86, 214);
+  --light-purple: rgb(175, 82, 222);
+  --light-pink: rgb(255, 45, 85);
+  --light-brown: rgb(162, 132, 94);
+  --light-gray: rgb(196, 196, 196);
+  
+  
+  /* Common theme variables */
+  --red: var(--light-red);
+  --orange: var(--light-orange);
+  --yellow: var(--light-yellow);
+  --green: var(--light-green);
+  --mint: var(--light-mint);
+  --teal: var(--light-teal);
+  --cyan: var(--light-cyan);
+  --blue: var(--light-blue);
+  --indigo: var(--light-indigo);
+  --purple: var(--light-purple);
+  --pink: var(--light-pink);
+  --brown: var(--light-brown);
+  --gray: var(--light-gray);
+  --light-primary-bg: #f8f9fa;
+  --light-secondary-bg: #e9ecef;
+  --light-text-color: #212529;
+  --light-border-color: #dee2e6;
+  --dark-primary-bg: #212529;
+  --dark-secondary-bg: #343a40;
+  --dark-text-color: #f8f9fa;
+  --dark-border-color: #495057;
+}
+
+body.dark-theme {
+  /* Dark theme */
+  --primary-bg: #212529;
+  --secondary-bg: #343a40;
+  --text-color: #f8f9fa;
+  --border-color: #495057;
+  
+  /* Theme colors - dark mode */
+  --red: rgb(255, 69, 58);
+  --orange: rgb(255, 159, 10);
+  --yellow: rgb(255, 214, 10);
+  --green: rgb(48, 209, 88);
+  --mint: rgb(102, 212, 207);
+  --teal: rgb(64, 200, 224);
+  --cyan: rgb(100, 210, 255);
+  --blue: rgb(10, 132, 255);
+  --indigo: rgb(94, 92, 230);
+  --purple: rgb(191, 90, 242);
+  --pink: rgb(255, 55, 95);
+  --brown: rgb(172, 142, 104);
+  --gray: rgb(70, 70, 70);
+}

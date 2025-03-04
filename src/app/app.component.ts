@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterLink, RouterOutlet, ThemeToggleComponent, NzIconModule, NzLayoutModule, NzMenuModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'my-angular-app';
+  isCollapsed = false;
+  theme = 'light';
+
+
 }

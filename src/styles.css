@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import "ng-zorro-antd/ng-zorro-antd.min.css";
+/* Theme css*/
+@import './theme.css';
+
+/* Add some global styles that respect theme */
+body {
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ...existing styles... */
