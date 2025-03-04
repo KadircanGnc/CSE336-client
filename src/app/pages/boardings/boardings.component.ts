@@ -2,14 +2,16 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BoardingsService } from '../../services/boardings.service';
 import { HttpClientModule } from '@angular/common/http';
-import { GetBoardings_WC_MLS_Response } from '../../types/types';
+import { CreateBoarding_WC_MLS_Request, GetBoardings_WC_MLS_Response } from '../../types/types';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { CreateBoardingDrawerComponent } from '../../components/create-boarding-drawer/create-boarding-drawer.component';
+import { UnixTimestampPipe } from '../../utils/UnixTimestampPipe';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-boardings',
   standalone: true,
-  imports: [NzTableModule, HttpClientModule, CreateBoardingDrawerComponent],
+  imports: [NzTableModule, NzButtonModule, HttpClientModule, CreateBoardingDrawerComponent, UnixTimestampPipe, CommonModule],
   templateUrl: './boardings.component.html',
   styleUrls: ['./boardings.component.css'],
 })
@@ -39,6 +41,29 @@ export class BoardingsComponent implements OnInit {
       this.boardings = data.content;
       this.totalElements = data.totalElements;
     });
+  }
+
+  deleteAllSelected(): void {
+    this.setOfCheckedId.forEach(id => {
+      this.boardingsService.deleteBoarding(id).subscribe(() => {
+        this.loadBoardings();
+      });
+    });
+  }
+
+  createBoarding(request: CreateBoarding_WC_MLS_Request): void {
+    this.boardingsService.createBoarding({
+      boardingTime: request.boardingTime,
+      passengerId: request.passengerId,
+      boardingTypeName: request.boardingTypeName,
+      busStopId: request.busStopId,
+      latitude: request.latitude,
+      longitude: request.longitude,
+      passengerType: request.passengerType,
+      tripId: request.tripId,
+    }).subscribe(() => {
+      this.loadBoardings();
+    })
   }
 
   addPassengerId(passengerId: string): void {

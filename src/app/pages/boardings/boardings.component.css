@@ -8,3 +8,8 @@
   color: var(--text-color);
 }
 
+.delete-button {
+  background-color: var(--red);
+  color: var(--text-color);
+  height: 40px;
+}

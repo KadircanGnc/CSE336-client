@@ -3,7 +3,7 @@ export type PaginatedResponse<T> = {
   empty: boolean;
   first: boolean;
   last: boolean;
-  number: number; 
+  number: number;
   numberOfElements: number;
   pageable: {
     offset: number;
@@ -40,6 +40,22 @@ export type GetBoardings_WC_MLS_Response = {
 }
 
 export type BoardingType = {
+  id: string;
+  name: string;
+}
+
+export type CreateBoarding_WC_MLS_Request = {
+  passengerId: string;
+  passengerType: string;
+  boardingTime: number;
+  busStopId: string;
+  latitude: number;
+  longitude: number;
+  tripId: string;
+  boardingTypeName: string;
+}
+
+export type GetBoardingTypes_WC_MLS_Response = {
   id: string;
   name: string;
 }

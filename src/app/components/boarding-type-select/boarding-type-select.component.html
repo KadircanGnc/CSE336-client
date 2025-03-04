@@ -1,0 +1,5 @@
+<nz-select [nzPlaceHolder]="placeholder" [(ngModel)]="value" (ngModelChange)="onChange($event)" (blur)="onTouched()">
+  @for (boardingType of boardingTypes; track boardingType.id) {
+  <nz-option [nzValue]="boardingType.name" [nzLabel]="boardingType.name"></nz-option>
+  }
+</nz-select>

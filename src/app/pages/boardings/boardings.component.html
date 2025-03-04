@@ -1,42 +1,44 @@
 <div>
-  <app-create-boarding-drawer></app-create-boarding-drawer>
+  <app-create-boarding-drawer (onSubmit)="createBoarding($event.request)"></app-create-boarding-drawer>
+  <button *ngIf="setOfCheckedId.size > 0" nz-button nzDanger nzType="primary" (click)="deleteAllSelected()">delete</button>
+
 </div>
 
-<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="boardings" [nzScroll]="{y: '70vh' }"
-[nzTotal]="totalElements" [nzFrontPagination]="false" [(nzPageIndex)]="page" [(nzPageSize)]="pageSize"
-(nzPageIndexChange)="onPageIndexChange($event)" (nzPageSizeChange)="onPageSizeChange($event)"
-(nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
-<thead>
-  <tr>
-    <th class="table-header-column" nzWidth="100px" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
-      (nzCheckedChange)="onAllChecked($event)"></th>
-    <th class="table-header-column" nzWidth="350px">Id</th>
-    <th class="table-header-column" nzWidth="200px">passengerId</th>
-    <th class="table-header-column" nzWidth="200px">passengerType</th>
-    <th class="table-header-column" nzWidth="200px">boardingType</th>
-    <th class="table-header-column" nzWidth="200px">tripId</th>
-    <th class="table-header-column" nzWidth="200px">busStopId</th>
-    <th class="table-header-column" nzWidth="200px">boardingTime</th>
-    <th class="table-header-column" nzWidth="200px">latitude</th>
-    <th class="table-header-column" nzWidth="200px">longitude</th>
-  </tr>
-</thead>
-<tbody>
-  @for (data of rowSelectionTable.data; track data) {
-  <tr>
-    <td class="table-row" [nzChecked]="setOfCheckedId.has(data.id)"
-      (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
-    <td class="table-row">{{ data.id }}</td>
-    <td class="table-row">{{data.passengerId}}</td>
-    <td class="table-row">{{data.passengerType}}</td>
-    <td class="table-row">{{data.boardingType.name}}</td>
-    <td class="table-row">{{data.tripId}}</td>
-    <td class="table-row">{{data.busStopId}}</td>
-    <td class="table-row">{{data.boardingTime}}</td>
-    <td class="table-row">{{data.latitude}}</td>
-    <td class="table-row">{{data.longitude}}</td>
-  </tr>
+<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="boardings" [nzScroll]="{y: '70vh' }" [nzTotal]="totalElements"
+  [nzFrontPagination]="false" [(nzPageIndex)]="page" [(nzPageSize)]="pageSize"
+  (nzPageIndexChange)="onPageIndexChange($event)" (nzPageSizeChange)="onPageSizeChange($event)"
+  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+  <thead>
+    <tr>
+      <th class="table-header-column" nzWidth="100px" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
+        (nzCheckedChange)="onAllChecked($event)"></th>
+      <th class="table-header-column" nzWidth="350px">Id</th>
+      <th class="table-header-column" nzWidth="200px">passengerId</th>
+      <th class="table-header-column" nzWidth="200px">passengerType</th>
+      <th class="table-header-column" nzWidth="200px">boardingType</th>
+      <th class="table-header-column" nzWidth="200px">tripId</th>
+      <th class="table-header-column" nzWidth="200px">busStopId</th>
+      <th class="table-header-column" nzWidth="200px">boardingTime</th>
+      <th class="table-header-column" nzWidth="200px">latitude</th>
+      <th class="table-header-column" nzWidth="200px">longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of rowSelectionTable.data; track data) {
+    <tr>
+      <td class="table-row" [nzChecked]="setOfCheckedId.has(data.id)"
+        (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+      <td class="table-row">{{ data.id }}</td>
+      <td class="table-row">{{data.passengerId}}</td>
+      <td class="table-row">{{data.passengerType}}</td>
+      <td class="table-row">{{data.boardingType.name}}</td>
+      <td class="table-row">{{data.tripId}}</td>
+      <td class="table-row">{{data.busStopId}}</td>
+      <td class="table-row">{{data.boardingTime | unixTimestamp}}</td>
+      <td class="table-row">{{data.latitude}}</td>
+      <td class="table-row">{{data.longitude}}</td>
+    </tr>
 
-  }
-</tbody>
+    }
+  </tbody>
 </nz-table>

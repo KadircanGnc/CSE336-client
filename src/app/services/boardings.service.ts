@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GetBoardings_WC_MLS_Response, PaginatedResponse } from '../types/types';
+import { CreateBoarding_WC_MLS_Request, GetBoardings_WC_MLS_Response, PaginatedResponse } from '../types/types';
 
 @Injectable({
   providedIn: 'root',
@@ -63,15 +63,16 @@ export class BoardingsService {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  createBoarding(boarding: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, boarding);
+  createBoarding(request: CreateBoarding_WC_MLS_Request): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, request
+    );
   }
 
-  updateBoarding(id: number, boarding: any): Observable<any> {
+  updateBoarding(id: string, boarding: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, boarding);
   }
 
-  deleteBoarding(id: number): Observable<any> {
+  deleteBoarding(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 }
