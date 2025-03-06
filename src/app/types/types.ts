@@ -97,3 +97,25 @@ export type GetDirections_WC_MLS_Response = {
   name: string;
 };
 
+export type GetRoutes_WC_MLS_Response = {
+  id: string;
+  direction: Direction;
+  line: Line;
+};
+
+export type CreateRoutes_WC_MLS_Request = {
+  directionId: string;
+  lineId: string;
+};
+
+export type Direction = {
+  id: string;
+  name: string;
+};
+
+export type Line = {
+  id: string;
+  lineCode: string;
+  lineCodeRepresentation: string;
+};
+

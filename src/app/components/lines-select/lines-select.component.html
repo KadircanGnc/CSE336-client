@@ -1,0 +1,5 @@
+<nz-select [nzPlaceHolder]="placeholder" [(ngModel)]="value" (ngModelChange)="onChange($event)" (blur)="onTouched()">
+    @for (line of lines; track line.id) {
+    <nz-option [nzValue]="line.id" [nzLabel]="line.lineCodeRepresentation"></nz-option>
+    }
+  </nz-select>
