@@ -39,18 +39,15 @@ export class CreateBoardingDrawerComponent {
     tripId: "",
     boardingTypeName: ""
   };
-
+  displayDate: Date | null = null;
   constructor() { }
 
   // Convert date to timestamp
 
-  displayDate(date: number): Date {
-    return dayjs.unix(date).toDate();
-  }
-
-  onDateChange(date: Date): void {
-    console.log('Date changed:', dayjs(date).unix());
-    this.request.boardingTime = dayjs(date).unix();
+  onDateChange(result: Date): void {
+    // Handle the date change here
+    // Convert Date object to timestamp (milliseconds since epoch)
+    this.request.boardingTime = result.getTime();
   }
 
   // Update submit method to emit the request object

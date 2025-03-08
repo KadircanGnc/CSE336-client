@@ -30,15 +30,10 @@
         <nz-form-item>
           <nz-form-label>Boarding Time</nz-form-label>
           <nz-form-control>
-        <nz-date-picker 
-          nzShowTime 
-          nzFormat="yyyy-MM-dd HH:mm:ss"
-          [(ngModel)]="displayDate"
-          (ngModelChange)="onDateChange($event)"
-          name="boardingTime" 
-          [nzAllowClear]="true"
-          nzPlaceHolder="Select boarding time">
-        </nz-date-picker>
+            <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="displayDate"
+              (ngModelChange)="onDateChange($event)" name="boardingTime" [nzAllowClear]="true"
+              nzPlaceHolder="Select boarding time" [nzMode]="'date'">
+            </nz-date-picker>
           </nz-form-control>
         </nz-form-item>
       </div>
