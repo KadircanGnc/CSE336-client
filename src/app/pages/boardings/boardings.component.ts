@@ -21,11 +21,16 @@ export class BoardingsComponent implements OnInit {
   pageSize = 10;
   page = 1;
   passengerIds: string[] = [];
-  private boardingsService = inject(BoardingsService);
+  passengerTypes: string[] = [];
+  busStopIds: string[] = [];
+  tripIds: string[] = [];
+  boardingTypeIds: string[] = [];
+  private readonly boardingsService = inject(BoardingsService);
   checked = false;
   indeterminate = false;
   listOfCurrentPageData: readonly GetBoardings_WC_MLS_Response[] = [];
   setOfCheckedId = new Set<string>();
+  showFilters = false;
 
   ngOnInit(): void {
     this.loadBoardings();
@@ -34,6 +39,10 @@ export class BoardingsComponent implements OnInit {
   loadBoardings(): void {
     this.boardingsService.getBoardings({
       passengerIds: this.passengerIds,
+      passengerTypes: this.passengerTypes,
+      busStopIds: this.busStopIds,
+      tripIds: this.tripIds,
+      boardingTypeIds: this.boardingTypeIds,
       page: this.page - 1,
       size: this.pageSize
     }
