@@ -2,42 +2,42 @@ import { CommonModule } from '@angular/common';
 import { Component, forwardRef, inject, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { DirectionsService } from '../../services/directions.service';
-import { Direction } from '../../types/types';
+import { RoutesService } from '../../services/routes.service';
+import { Route } from '../../types/types';
 
 @Component({
-  selector: 'app-directions-select',
+  selector: 'app-routes-select',
   standalone: true,
   imports: [CommonModule, NzSelectModule, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DirectionsSelectComponent),
+      useExisting: forwardRef(() => RoutesSelectComponent),
       multi: true
     }
   ],
-  templateUrl: './directions-select.component.html',
-  styleUrl: './directions-select.component.css'
+  templateUrl: './routes-select.component.html',
+  styleUrl: './routes-select.component.css'
 })
-export class DirectionsSelectComponent implements OnInit, ControlValueAccessor {
-  private directionsService = inject(DirectionsService);
-  directions: Direction[] = [];
+export class RoutesSelectComponent implements OnInit, ControlValueAccessor {
+  private routesService = inject(RoutesService);
+  routes: Route[] = [];
   value: string = '';
-  @Input() placeholder: string = 'Select a Direction';
+  @Input() placeholder: string = 'Select a Route';
 
   onChange: any = () => {};
   onTouched: any = () => {};
 
   ngOnInit(): void {
-    this.loadDirections();
+    this.loadRoutes();
   }
 
-  loadDirections(): void {
-    this.directionsService.getDirections({
+  loadRoutes(): void {
+    this.routesService.getRoutes({
       page: 0,
       size: 1000
     }).subscribe((data) => {
-      this.directions = data.content;
+      this.routes = data.content;
     });
   }
 

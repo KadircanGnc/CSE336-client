@@ -16,5 +16,4 @@ export class AppComponent {
   isCollapsed = false;
   theme = 'light';
 
-
 }

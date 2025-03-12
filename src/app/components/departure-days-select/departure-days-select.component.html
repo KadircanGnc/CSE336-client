@@ -1,0 +1,5 @@
+<nz-select [nzPlaceHolder]="placeholder" [(ngModel)]="value" (ngModelChange)="onChange($event)" (blur)="onTouched()">
+    @for (departureDay of departureDays; track departureDay.id) {
+    <nz-option [nzValue]="departureDay.id" [nzLabel]="departureDay.day"></nz-option>
+    }
+  </nz-select>

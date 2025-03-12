@@ -1,3 +1,4 @@
+
 export type PaginatedResponse<T> = {
   content: T[];
   empty: boolean;
@@ -108,6 +109,12 @@ export type CreateRoutes_WC_MLS_Request = {
   lineId: string;
 };
 
+export type Route = {
+  id: string;
+  direction: Direction;
+  line: Line;
+};
+
 export type Direction = {
   id: string;
   name: string;
@@ -117,5 +124,53 @@ export type Line = {
   id: string;
   lineCode: string;
   lineCodeRepresentation: string;
+};
+
+export type DepartureDay = {
+  id: string;
+  day: string;
+};
+
+export type GetDepartures_WC_MLS_Response = {
+  id: string;
+  route: Route;
+  departureDay: DepartureDay;
+};
+
+export type CreateDepartures_WC_MLS_Request = {
+  routeId: string;
+  departureDayId: string;
+};
+
+export type GetDepartureDays_WC_MLS_Response = {
+  id: string;
+  day: string;
+};
+
+export type CreateDepartureDays_WC_MLS_Request = {
+  day: string;
+};
+
+export type GetPoints_WC_MLS_Response = {
+  id: string;
+  route: Route;
+  sequence: number;
+  latitude: number;
+  longitude: number;
+};
+
+export type CreatePoints_WC_MLS_Request = {
+  routeId: string;
+  sequence: number;
+  latitude: number;
+  longitude: number;
+};
+
+export type Point = {
+  id: string;
+  route: Route;
+  sequence: number;
+  latitude: number;
+  longitude: number;
 };
 

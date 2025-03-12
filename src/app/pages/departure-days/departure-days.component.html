@@ -1,0 +1,29 @@
+<div>
+    <app-create-departure-day-drawer (onSubmit)="createDepartureDay($event.request)"></app-create-departure-day-drawer>
+    <button *ngIf="setOfCheckedId.size > 0" nz-button nzDanger nzType="primary"
+      (click)="deleteAllSelected()">delete</button>
+</div>
+  
+  <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="departureDays" [nzScroll]="{y: '70vh' }" [nzTotal]="totalElements"
+    [nzFrontPagination]="false" [(nzPageIndex)]="page" [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="onPageIndexChange($event)" (nzPageSizeChange)="onPageSizeChange($event)"
+    (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+    <thead>
+      <tr>
+        <th class="table-header-column" nzWidth="100px" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
+          (nzCheckedChange)="onAllChecked($event)"></th>
+        <th class="table-header-column" nzWidth="350px">Id</th>
+        <th class="table-header-column" nzWidth="200px">Day</th>        
+      </tr>
+    </thead>
+    <tbody>
+      @for (data of rowSelectionTable.data; track data) {
+      <tr>
+        <td class="table-row" [nzChecked]="setOfCheckedId.has(data.id)"
+          (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+        <td class="table-row">{{ data.id }}</td>
+        <td class="table-row">{{ data.day }}</td>        
+      </tr>  
+      }
+    </tbody>
+  </nz-table>

@@ -2,42 +2,42 @@ import { CommonModule } from '@angular/common';
 import { Component, forwardRef, inject, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { DirectionsService } from '../../services/directions.service';
-import { Direction } from '../../types/types';
+import { DepartureDaysService } from '../../services/departure-days.service';
+import { DepartureDay } from '../../types/types';
 
 @Component({
-  selector: 'app-directions-select',
+  selector: 'app-departure-days-select',
   standalone: true,
   imports: [CommonModule, NzSelectModule, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DirectionsSelectComponent),
+      useExisting: forwardRef(() => DepartureDaysSelectComponent),
       multi: true
     }
   ],
-  templateUrl: './directions-select.component.html',
-  styleUrl: './directions-select.component.css'
+  templateUrl: './departure-days-select.component.html',
+  styleUrl: './departure-days-select.component.css'
 })
-export class DirectionsSelectComponent implements OnInit, ControlValueAccessor {
-  private directionsService = inject(DirectionsService);
-  directions: Direction[] = [];
+export class DepartureDaysSelectComponent implements OnInit, ControlValueAccessor {
+  private departureDaysService = inject(DepartureDaysService);
+  departureDays: DepartureDay[] = [];
   value: string = '';
-  @Input() placeholder: string = 'Select a Direction';
+  @Input() placeholder: string = 'Select a Departure Day';
 
   onChange: any = () => {};
   onTouched: any = () => {};
 
   ngOnInit(): void {
-    this.loadDirections();
+    this.loadDepartureDays();
   }
 
-  loadDirections(): void {
-    this.directionsService.getDirections({
+  loadDepartureDays(): void {
+    this.departureDaysService.getDepartureDays({
       page: 0,
       size: 1000
     }).subscribe((data) => {
-      this.directions = data.content;
+      this.departureDays = data.content;
     });
   }
 

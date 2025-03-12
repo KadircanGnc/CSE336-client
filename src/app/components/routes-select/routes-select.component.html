@@ -1,0 +1,5 @@
+<nz-select [nzPlaceHolder]="placeholder" [(ngModel)]="value" (ngModelChange)="onChange($event)" (blur)="onTouched()">
+    @for (route of routes; track route.id) {
+    <nz-option [nzValue]="route.id" [nzLabel]="route.id"></nz-option>
+    }
+  </nz-select>

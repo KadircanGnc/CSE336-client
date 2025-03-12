@@ -54,10 +54,26 @@
     </nz-table>
   </div>
   <div *ngIf="showFilters" style="width: 15%;">
-    <div>PassengerIds</div>
+    <label
+      nz-checkbox
+      [(ngModel)]="allChecked"
+      (ngModelChange)="updateAllChecked()"
+      [nzIndeterminate]="value.length > 0 && value.length !== options.length"
+    >
+      Check all
+    </label>
+
+    <nz-divider />
+
+    <nz-checkbox-group
+      [nzOptions]="options"
+      [(ngModel)]="value"
+      (ngModelChange)="updateSingleChecked()"
+    ></nz-checkbox-group>
+    <!-- <div>PassengerIds</div>
     <div>passengerTypes</div>
     <div>busStopIds</div>
     <div>tripIds</div>
-    <div>boardingTypeIds</div>
+    <div>boardingTypeIds</div> -->
   </div>
 </div>

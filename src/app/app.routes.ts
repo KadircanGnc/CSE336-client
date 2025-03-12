@@ -6,6 +6,9 @@ import { BusStopComponent } from './pages/bus-stop/bus-stop.component';
 import { LinesComponent } from './pages/lines/lines.component';
 import { DirectionsComponent } from './pages/directions/directions.component';
 import { RoutesComponent } from './pages/routes/routes.component';
+import { DepartureDaysComponent } from './pages/departure-days/departure-days.component';
+import { DeparturesComponent } from './pages/departures/departures.component';
+import { PointsComponent } from './pages/points/points.component';
 
 
 export const routes: Routes = [
@@ -16,5 +19,8 @@ export const routes: Routes = [
   { path: 'bus-stops', component: BusStopComponent },
   { path: 'lines', component: LinesComponent },
   { path: 'directions', component: DirectionsComponent },
-  { path: 'routes', component: RoutesComponent }
+  { path: 'routes', component: RoutesComponent },
+  { path: 'departure-days', component: DepartureDaysComponent },
+  { path: 'departures', component: DeparturesComponent },
+  { path: 'points', component: PointsComponent }
 ];
