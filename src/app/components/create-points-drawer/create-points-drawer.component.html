@@ -8,7 +8,7 @@
             <nz-form-item>
               <nz-form-label>Route</nz-form-label>
               <nz-form-control>
-                <app-routes-select [(ngModel)]="request.routeId" name="routeId"></app-routes-select>
+                <app-routes-select required [(ngModel)]="request.routeId" name="routeId"></app-routes-select>
               </nz-form-control>
             </nz-form-item>
           </div>  
@@ -16,7 +16,7 @@
         <nz-form-item>
           <nz-form-label>Sequence</nz-form-label>
           <nz-form-control>
-            <input nz-input placeholder="please enter Sequence" [(ngModel)]="request.sequence" name="sequence" />
+            <input required nz-input placeholder="please enter Sequence" [(ngModel)]="request.sequence" name="sequence" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -24,7 +24,7 @@
         <nz-form-item>
           <nz-form-label>Latitude</nz-form-label>
           <nz-form-control>
-            <input nz-input placeholder="please enter Latitude" [(ngModel)]="request.latitude" name="latitude" />
+            <input required nz-input placeholder="please enter Latitude" [(ngModel)]="request.latitude" name="latitude" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -32,7 +32,7 @@
         <nz-form-item>
           <nz-form-label>Longitude</nz-form-label>
           <nz-form-control>
-            <input nz-input placeholder="please enter Longitude" [(ngModel)]="request.longitude" name="longitude" />
+            <input required nz-input placeholder="please enter Longitude" [(ngModel)]="request.longitude" name="longitude" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -43,7 +43,7 @@
   <ng-template #footerTpl style="background-color: var(--primary-bg);">
     <div style="float: right">
       <button nz-button style="margin-right: 8px;" (click)="close()">Cancel</button>
-      <button nz-button nzType="primary" (click)="submit()">Submit</button>
+      <button nz-button nzType="primary" (click)="submit()" [disabled]="!request.latitude || !request.longitude || !request.routeId || !request.sequence">Submit</button>
     </div>
   </ng-template>
 </nz-drawer>

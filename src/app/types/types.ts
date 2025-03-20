@@ -53,7 +53,7 @@ export type CreateBoarding_WC_MLS_Request = {
   latitude: number;
   longitude: number;
   tripId: string;
-  boardingTypeName: string;
+  boardingTypeId: string;
 };
 
 export type GetBoardingTypes_WC_MLS_Response = {

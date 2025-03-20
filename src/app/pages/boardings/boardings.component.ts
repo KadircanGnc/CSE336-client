@@ -46,7 +46,18 @@ export class BoardingsComponent implements OnInit {
   indeterminate = false;
   listOfCurrentPageData: readonly GetBoardings_WC_MLS_Response[] = [];
   setOfCheckedId = new Set<string>();
-  showFilters = false;
+  private _showFilters = false;
+  get showFilters(): boolean {
+    return this._showFilters;
+  }
+  set showFilters(value: boolean) {
+    this._showFilters = value;
+    if (value) {
+      this.allChecked = false;
+      this.value = [];
+      this.updateFilterOptions();
+    }
+  }
 
   // Checkbox
   isAllCheckedFirstChange = true;
@@ -101,7 +112,7 @@ export class BoardingsComponent implements OnInit {
       .createBoarding({
         boardingTime: request.boardingTime,
         passengerId: request.passengerId,
-        boardingTypeName: request.boardingTypeName,
+        boardingTypeId: request.boardingTypeId,
         busStopId: request.busStopId,
         latitude: request.latitude,
         longitude: request.longitude,
@@ -202,16 +213,51 @@ export class BoardingsComponent implements OnInit {
   }
 
   updateFilterOptions(): void {
-    this.passengerIds = this.value.includes('passengerIds')
-      ? this.passengerIds
-      : [];
-    this.passengerTypes = this.value.includes('passengerTypes')
-      ? this.passengerTypes
-      : [];
-    this.busStopIds = this.value.includes('busStopIds') ? this.busStopIds : [];
-    this.tripIds = this.value.includes('tripIds') ? this.tripIds : [];
-    this.boardingTypeIds = this.value.includes('boardingTypeIds')
-      ? this.boardingTypeIds
-      : [];
+    if (this.value.includes('passengerIds')) {
+      this.boardingsService.getPassengerIds().subscribe((data) => {
+        this.passengerIds = data;
+        this.loadBoardings();
+      });
+    } else {
+      this.passengerIds = [];
+    }
+
+    if (this.value.includes('passengerTypes')) {
+      this.boardingsService.getPassengerTypes().subscribe((data) => {
+        this.passengerTypes = data;
+        this.loadBoardings();
+      });
+    } else {
+      this.passengerTypes = [];
+    }
+
+    if (this.value.includes('busStopIds')) {
+      this.boardingsService.getBusStopIds().subscribe((data) => {
+        this.busStopIds = data;
+        this.loadBoardings();
+      });
+    } else {
+      this.busStopIds = [];
+    }
+
+    if (this.value.includes('tripIds')) {
+      this.boardingsService.getTripIds().subscribe((data) => {
+        this.tripIds = data;
+        this.loadBoardings();
+      });
+    } else {
+      this.tripIds = [];
+    }
+
+    if (this.value.includes('boardingTypeIds')) {
+      this.boardingsService.getBoardingTypeIds().subscribe((data) => {
+        this.boardingTypeIds = data;
+        this.loadBoardings();
+      });
+    } else {
+      this.boardingTypeIds = [];
+    }
   }
+  
+ 
 }

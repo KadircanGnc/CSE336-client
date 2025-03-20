@@ -8,7 +8,7 @@
         <nz-form-item>
           <nz-form-label>Name</nz-form-label>
           <nz-form-control>
-            <input nz-input placeholder="please enter Boarding type name" [(ngModel)]="request.name" name="name" />
+            <input required nz-input placeholder="please enter Boarding type name" [(ngModel)]="request.name" name="name" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -18,7 +18,7 @@
   <ng-template #footerTpl style="background-color: var(--primary-bg);">
     <div style="float: right">
       <button nz-button style="margin-right: 8px;" (click)="close()">Cancel</button>
-      <button nz-button nzType="primary" (click)="submit()">Submit</button>
+      <button nz-button nzType="primary" (click)="submit()" [disabled]="!request.name">Submit</button>
     </div>
   </ng-template>
 </nz-drawer>

@@ -9,6 +9,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CreateBoarding_WC_MLS_Request } from '../../types/types';
 import { BoardingTypeSelectComponent } from '../boarding-type-select/boarding-type-select.component';
 import dayjs from 'dayjs';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -21,6 +22,7 @@ import dayjs from 'dayjs';
     NzSelectModule,
     FormsModule,
     BoardingTypeSelectComponent,
+    CommonModule    
   ],
   selector: 'app-create-boarding-drawer',
   templateUrl: './create-boarding-drawer.component.html',
@@ -37,7 +39,7 @@ export class CreateBoardingDrawerComponent {
     latitude: 0,
     longitude: 0,
     tripId: "",
-    boardingTypeName: ""
+    boardingTypeId: ""
   };
   displayDate: Date | null = null;
   constructor() { }
@@ -85,7 +87,7 @@ export class CreateBoardingDrawerComponent {
       latitude: 0,
       longitude: 0,
       tripId: "",
-      boardingTypeName: ""
+      boardingTypeId: ""
     };
   }
 }

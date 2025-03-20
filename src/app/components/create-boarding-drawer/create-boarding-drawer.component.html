@@ -8,8 +8,8 @@
         <nz-form-item>
           <nz-form-label>Passenger Id</nz-form-label>
           <nz-form-control>
-            <input nz-input placeholder="please enter passenger id" [(ngModel)]="request.passengerId"
-              name="passengerId" />
+            <input required placeholder="please enter passenger id" [(ngModel)]="request.passengerId"
+              name="passengerId" #passengerId="ngModel" />            
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -18,7 +18,7 @@
           <nz-form-label>Passenger Type</nz-form-label>
           <nz-form-control>
             <nz-select nzPlaceHolder="Please select a passenger type" [(ngModel)]="request.passengerType"
-              name="passengerType">
+              name="passengerType" #passengerType="ngModel">
               <nz-option nzValue="adult" nzLabel="Adult"></nz-option>
               <nz-option nzValue="child" nzLabel="Child"></nz-option>
               <nz-option nzValue="senior" nzLabel="Senior"></nz-option>
@@ -42,7 +42,7 @@
         <nz-form-item>
           <nz-form-label>Bus Stop Id</nz-form-label>
           <nz-form-control>
-            <input nz-input placeholder="please enter bus stop id" [(ngModel)]="request.busStopId" name="busStopId" />
+            <input required nz-input placeholder="please enter bus stop id" [(ngModel)]="request.busStopId" name="busStopId" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -50,7 +50,7 @@
         <nz-form-item>
           <nz-form-label>Latitude</nz-form-label>
           <nz-form-control>
-            <input nz-input placeholder="please enter latitude" [(ngModel)]="request.latitude" name="latitude"
+            <input required nz-input placeholder="please enter latitude" [(ngModel)]="request.latitude" name="latitude"
               type="number" />
           </nz-form-control>
         </nz-form-item>
@@ -59,7 +59,7 @@
         <nz-form-item>
           <nz-form-label>Longitude</nz-form-label>
           <nz-form-control>
-            <input nz-input placeholder="please enter longitude" [(ngModel)]="request.longitude" name="longitude"
+            <input required nz-input placeholder="please enter longitude" [(ngModel)]="request.longitude" name="longitude"
               type="number" />
           </nz-form-control>
         </nz-form-item>
@@ -68,7 +68,7 @@
         <nz-form-item>
           <nz-form-label>Trip Id</nz-form-label>
           <nz-form-control>
-            <input nz-input placeholder="please enter trip id" [(ngModel)]="request.tripId" name="tripId" />
+            <input required nz-input placeholder="please enter trip id" [(ngModel)]="request.tripId" name="tripId" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -76,8 +76,8 @@
         <nz-form-item>
           <nz-form-label>Boarding Type</nz-form-label>
           <nz-form-control>
-            <app-boarding-type-select [(ngModel)]="request.boardingTypeName"
-              name="boardingTypeName"></app-boarding-type-select>
+            <app-boarding-type-select [(ngModel)]="request.boardingTypeId"
+              name="boardingTypeId"></app-boarding-type-select>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -87,7 +87,10 @@
   <ng-template #footerTpl style="background-color: var(--primary-bg);">
     <div style="float: right">
       <button nz-button style="margin-right: 8px;" (click)="close()">Cancel</button>
-      <button nz-button nzType="primary" (click)="submit()">Submit</button>
+      <button nz-button nzType="primary" (click)="submit()" 
+        [disabled]="!request.passengerId || !request.passengerType || !request.boardingTime || !request.busStopId || !request.latitude || !request.longitude || !request.tripId || !request.boardingTypeId">
+        Submit
+      </button>
     </div>
   </ng-template>
 </nz-drawer>
