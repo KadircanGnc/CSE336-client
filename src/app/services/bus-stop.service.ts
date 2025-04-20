@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {  CreateBusStop_WC_MLS_Request, GetBusStops_WC_MLS_Response, PaginatedResponse } from '../types/types';
+import {  CreateBusStop_WC_MLS_Request, GetBusStops_WC_MLS_Response, PaginatedResponse, UpdateBusStopRequest } from '../types/types';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +37,9 @@ export class BusStopService {
 
   create(request: CreateBusStop_WC_MLS_Request) {
     return this.http.post(`${this.apiUrl}`, request);
+  }
+
+  update(id: string, request: UpdateBusStopRequest) {
+    return this.http.put(`${this.apiUrl}/${id}`, request);
   }
 }

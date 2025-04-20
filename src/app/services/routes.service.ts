@@ -1,7 +1,15 @@
+import { routes } from './../app.routes';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CreateBoarding_WC_MLS_Request, CreateRoutes_WC_MLS_Request, GetBoardings_WC_MLS_Response, GetRoutes_WC_MLS_Response, PaginatedResponse } from '../types/types';
+import {
+  CreateBoarding_WC_MLS_Request,
+  CreateRoutes_WC_MLS_Request,
+  GetBoardings_WC_MLS_Response,
+  GetRoutes_WC_MLS_Response,
+  PaginatedResponse,
+  UpdateRouteRequest,
+} from '../types/types';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +17,9 @@ import { CreateBoarding_WC_MLS_Request, CreateRoutes_WC_MLS_Request, GetBoarding
 export class RoutesService {
   private apiUrl = 'http://localhost:8080/api/v1/routes'; // Update with your API URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getRoutes(queryParams?: {    
+  getRoutes(queryParams?: {
     page?: number;
     size?: number;
   }): Observable<PaginatedResponse<GetRoutes_WC_MLS_Response>> {
@@ -26,23 +34,21 @@ export class RoutesService {
       }
     }
 
-    return this.http.get<PaginatedResponse<GetRoutes_WC_MLS_Response>>(`${this.apiUrl}`, { params });
-  }
-
-  getroutesById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
-  }
-
-  createRoutes(request: CreateRoutes_WC_MLS_Request): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, request
+    return this.http.get<PaginatedResponse<GetRoutes_WC_MLS_Response>>(
+      `${this.apiUrl}`,
+      { params }
     );
   }
 
-  updateRoutes(id: string, boarding: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, boarding);
+  delete(id: string) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
-  deleteRoutes(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  create(request: CreateRoutes_WC_MLS_Request) {
+    return this.http.post(`${this.apiUrl}`, request);
+  }
+
+  update(id: string, request: UpdateRouteRequest) {
+    return this.http.put(`${this.apiUrl}/${id}`, request);
   }
 }

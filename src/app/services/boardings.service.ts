@@ -5,6 +5,7 @@ import {
   CreateBoarding_WC_MLS_Request,
   GetBoardings_WC_MLS_Response,
   PaginatedResponse,
+  UpdateBoardingRequest,
 } from '../types/types';
 
 @Injectable({
@@ -102,4 +103,8 @@ export class BoardingsService {
   getBoardingTypeIds(): Observable<string[]> {
     return this.http.get<string[]>(`${this.filterUrl}/boarding-type-ids`);
   }
+
+  update(id: string, request: UpdateBoardingRequest) {
+      return this.http.put(`${this.apiUrl}/${id}`, request);
+    }
 }

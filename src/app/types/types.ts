@@ -174,3 +174,55 @@ export type Point = {
   longitude: number;
 };
 
+export type UpdateBoardingTypeRequest = {  
+  name: string;
+};
+
+export type UpdateBusStopRequest = {
+  stopName: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type UpdateLineRequest = {
+  lineCode: string;
+  lineCodeRepresentation: string;
+};
+
+export type UpdateDirectionRequest = {
+  name: string;
+};
+
+export type UpdateDepartureDayRequest = {
+  day: string;
+};
+
+export type UpdatePointRequest = {
+  routeId: string;
+  sequence: number;
+  latitude: number;
+  longitude: number;
+};
+
+export type UpdateRouteRequest = {
+  directionId: string;
+  lineId: string;
+};
+
+export type UpdateDepartureRequest = {
+  routeId: string;
+  departureDayId: string;
+};
+
+export type UpdateBoardingRequest = {
+  passengerId: string;
+  passengerType: string;
+  boardingTime: number;
+  busStopId: string;
+  latitude: number;
+  longitude: number;
+  tripId: string;
+  boardingTypeId: string;
+};
+
+

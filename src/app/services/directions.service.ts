@@ -1,17 +1,21 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateDirection_WC_MLS_Request, GetDirections_WC_MLS_Response, PaginatedResponse } from '../types/types';
+import {
+  CreateDirection_WC_MLS_Request,
+  GetDirections_WC_MLS_Response,
+  PaginatedResponse,
+  UpdateDirectionRequest,
+  UpdateLineRequest,
+} from '../types/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DirectionsService {
-
-
   private apiUrl = 'http://localhost:8080/api/v1/directions'; // Update with your API URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getDirections(queryParams?: {
     page?: number;
@@ -28,7 +32,10 @@ export class DirectionsService {
       }
     }
 
-    return this.http.get<PaginatedResponse<GetDirections_WC_MLS_Response>>(`${this.apiUrl}`, { params });
+    return this.http.get<PaginatedResponse<GetDirections_WC_MLS_Response>>(
+      `${this.apiUrl}`,
+      { params }
+    );
   }
 
   delete(id: string) {
@@ -37,5 +44,9 @@ export class DirectionsService {
 
   create(request: CreateDirection_WC_MLS_Request) {
     return this.http.post(`${this.apiUrl}`, request);
+  }
+
+  update(id: string, request: UpdateDirectionRequest) {
+    return this.http.put(`${this.apiUrl}/${id}`, request);
   }
 }

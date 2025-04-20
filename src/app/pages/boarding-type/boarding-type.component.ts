@@ -1,13 +1,11 @@
-
-
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { CreateBoardingTypeDrawerComponent } from '../../components/create-boarding-type-drawer/create-boarding-type-drawer.component';
 import { BoardingTypeService } from '../../services/boarding-type.service';
-import { CreateBoardingType_WC_MLS_Request, GetBoardingTypes_WC_MLS_Response } from '../../types/types';
+import { CreateBoardingType_WC_MLS_Request, GetBoardingTypes_WC_MLS_Response, UpdateBoardingTypeRequest } from '../../types/types';
 
 
 @Component({
@@ -16,7 +14,9 @@ import { CreateBoardingType_WC_MLS_Request, GetBoardingTypes_WC_MLS_Response } f
   templateUrl: './boarding-type.component.html',
   styleUrl: './boarding-type.component.css'
 })
+
 export class BoardingTypeComponent implements OnInit {
+
   boardingTypes: GetBoardingTypes_WC_MLS_Response[] = [];
   totalElements = 0;
   pageSize = 10;
@@ -26,6 +26,9 @@ export class BoardingTypeComponent implements OnInit {
   indeterminate = false;
   listOfCurrentPageData: readonly GetBoardingTypes_WC_MLS_Response[] = [];
   setOfCheckedId = new Set<string>();
+
+  selectedItem: GetBoardingTypes_WC_MLS_Response | null = null;
+  @ViewChild(CreateBoardingTypeDrawerComponent) createBoardingTypeDrawer!: CreateBoardingTypeDrawerComponent;
 
   ngOnInit(): void {
     this.loadBoardingTypes();
@@ -53,8 +56,17 @@ export class BoardingTypeComponent implements OnInit {
   createBoardingType(request: CreateBoardingType_WC_MLS_Request): void {
     this.boardingTypeService.create(request).subscribe(() => {
       this.loadBoardingTypes();
-    })
+    });
   }
+
+  updateBoardingType(id: string, request: UpdateBoardingTypeRequest): void {
+    this.boardingTypeService.update(id, request).subscribe(() => {
+      this.loadBoardingTypes();
+      this.selectedItem = null;
+      this.setOfCheckedId.clear();
+    });
+  }
+  
 
   updateCheckedSet(id: string, checked: boolean): void {
     if (checked) {
@@ -94,5 +106,22 @@ export class BoardingTypeComponent implements OnInit {
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
+  updateSelected(): void {
+    if (this.setOfCheckedId.size !== 1) {
+      return; // Ensure only one item is selected
+    }
+  }
 
+  openUpdateDrawer(): void {
+    if (this.setOfCheckedId.size === 1) {
+      const selectedId = Array.from(this.setOfCheckedId)[0];
+      this.selectedItem = this.boardingTypes.find(item => item.id === selectedId) || null;
+      
+      if (this.selectedItem) {
+        this.createBoardingTypeDrawer.selectedItem = { ...this.selectedItem }; // Pass selected item properly
+        this.createBoardingTypeDrawer.open();
+      }
+    }
+  }
+  
 }

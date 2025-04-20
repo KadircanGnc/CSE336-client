@@ -1,16 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateDepartureDays_WC_MLS_Request, GetDepartureDays_WC_MLS_Response, PaginatedResponse } from '../types/types';
+import {
+  CreateDepartureDays_WC_MLS_Request,
+  GetDepartureDays_WC_MLS_Response,
+  PaginatedResponse,
+  UpdateDepartureDayRequest,
+} from '../types/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DepartureDaysService {
-
   private apiUrl = 'http://localhost:8080/api/v1/departure-days'; // Update with your API URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getDepartureDays(queryParams?: {
     page?: number;
@@ -27,7 +31,10 @@ export class DepartureDaysService {
       }
     }
 
-    return this.http.get<PaginatedResponse<GetDepartureDays_WC_MLS_Response>>(`${this.apiUrl}`, { params });
+    return this.http.get<PaginatedResponse<GetDepartureDays_WC_MLS_Response>>(
+      `${this.apiUrl}`,
+      { params }
+    );
   }
 
   delete(id: string) {
@@ -36,5 +43,9 @@ export class DepartureDaysService {
 
   create(request: CreateDepartureDays_WC_MLS_Request) {
     return this.http.post(`${this.apiUrl}`, request);
+  }
+
+  update(id: string, request: UpdateDepartureDayRequest) {
+    return this.http.put(`${this.apiUrl}/${id}`, request);
   }
 }

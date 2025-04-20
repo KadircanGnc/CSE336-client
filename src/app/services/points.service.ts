@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreatePoints_WC_MLS_Request, GetPoints_WC_MLS_Response, PaginatedResponse } from '../types/types';
+import { CreatePoints_WC_MLS_Request, GetPoints_WC_MLS_Response, PaginatedResponse, UpdatePointRequest } from '../types/types';
 
 @Injectable({
   providedIn: 'root',
@@ -37,4 +37,8 @@ export class PointsService {
   create(request: CreatePoints_WC_MLS_Request) {
     return this.http.post(`${this.apiUrl}`, request);
   }
+
+  update(id: string, request: UpdatePointRequest) {
+      return this.http.put(`${this.apiUrl}/${id}`, request);
+    }
 }

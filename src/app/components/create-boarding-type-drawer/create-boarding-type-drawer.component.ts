@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { CreateBoardingType_WC_MLS_Request } from '../../types/types';
+import { CreateBoardingType_WC_MLS_Request, GetBoardingTypes_WC_MLS_Response, UpdateBoardingTypeRequest } from '../../types/types';
 
 
 
@@ -22,26 +22,52 @@ import { CreateBoardingType_WC_MLS_Request } from '../../types/types';
 })
 export class CreateBoardingTypeDrawerComponent {
   visible = false;
-  @Output() onSubmit = new EventEmitter<{ request: CreateBoardingType_WC_MLS_Request }>();
+  @Input() selectedItem: GetBoardingTypes_WC_MLS_Response | null = null;
+  @Output() onCreate = new EventEmitter<{ request: CreateBoardingType_WC_MLS_Request }>();
+  @Output() onUpdate = new EventEmitter<{ id: string, request: UpdateBoardingTypeRequest }>();
+  id: string | null = null;
   request: CreateBoardingType_WC_MLS_Request = {
     name: ""
   };
 
+
   constructor() { }
 
-  // Update submit method to emit the request object
   submit(): void {
-    try {
-      console.log('Submitting request:', this.request);
+    if (this.selectedItem) {
+      this.update(); // Call update if we are editing
+    } else {
+      this.create(); // Call create if we are adding new
+    }
+  }
+  
 
-      this.onSubmit.emit({ request: this.request });
+  create(): void {
+    try {
+      console.log('Creating request:', this.request);
+      this.onCreate.emit({ request: this.request });
       this.close();
     } catch (error) {
-      console.error('Error in submit:', error);
+      console.error('Error in create:', error);
     }
   }
 
+  update(): void {
+    if (this.selectedItem) {
+      this.onUpdate.emit({ id: this.selectedItem.id, request: { name: this.request.name } }); 
+      this.close();
+    }
+  }
+  
+
   open(): void {
+    if (this.selectedItem) {
+      this.request = {
+        name: this.selectedItem.name
+      };
+    } else {
+      this.resetRequest();
+    }
     this.visible = true;
   }
 

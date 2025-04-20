@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateBoarding_WC_MLS_Request, CreateBoardingType_WC_MLS_Request, GetBoardings_WC_MLS_Response, GetBoardingTypes_WC_MLS_Response, PaginatedResponse } from '../types/types';
+import { CreateBoardingType_WC_MLS_Request, GetBoardingTypes_WC_MLS_Response, PaginatedResponse, UpdateBoardingTypeRequest } from '../types/types';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +37,9 @@ export class BoardingTypeService {
 
   create(request: CreateBoardingType_WC_MLS_Request) {
     return this.http.post(`${this.apiUrl}`, request);
+  }
+
+  update(id: string, request: UpdateBoardingTypeRequest) {
+    return this.http.put(`${this.apiUrl}/${id}`, request);
   }
 }

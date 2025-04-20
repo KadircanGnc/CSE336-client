@@ -8,8 +8,19 @@
 >
   <div style="flex: auto">
     <app-create-departures-drawer
-      (onSubmit)="createDepartures($event.request)"
+    [selectedItem]="selectedItem" 
+    (onCreate)="createDepartures($event.request)" 
+    (onUpdate)="updateDeparture($event.id, $event.request)"
     ></app-create-departures-drawer>
+    <button
+      *ngIf="setOfCheckedId.size == 1"
+      nz-button
+      nzGhost
+      nzType="primary"
+      (click)="openUpdateDrawer()"
+    >
+      update
+    </button>
     <button
       *ngIf="setOfCheckedId.size > 0"
       nz-button
@@ -53,7 +64,7 @@
         ></th>
         <th class="table-header-column" nzWidth="350px">Id</th>
         <th class="table-header-column" nzWidth="200px">Route</th>
-        <th class="table-header-column" nzWidth="200px">Departure Day</th>        
+        <th class="table-header-column" nzWidth="200px">Departure Day</th>
       </tr>
     </thead>
     <tbody>
@@ -65,8 +76,8 @@
           (nzCheckedChange)="onItemChecked(data.id, $event)"
         ></td>
         <td class="table-row">{{ data.id }}</td>
-        <td class="table-row">{{ data.route.id}}</td>
-        <td class="table-row">{{ data.departureDay.day }}</td>        
+        <td class="table-row">{{ data.route.id }}</td>
+        <td class="table-row">{{ data.departureDay.day }}</td>
       </tr>
       }
     </tbody>

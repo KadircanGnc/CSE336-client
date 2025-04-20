@@ -1,32 +1,69 @@
 <div>
-    <app-create-routes-drawer (onSubmit)="createRoutes($event.request)"></app-create-routes-drawer>
-    <button *ngIf="setOfCheckedId.size > 0" nz-button nzDanger nzType="primary" (click)="deleteAllSelected()">delete</button>
-  
-  </div>
-  
-  <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="routes" [nzScroll]="{y: '70vh' }" [nzTotal]="totalElements"
-    [nzFrontPagination]="false" [(nzPageIndex)]="page" [(nzPageSize)]="pageSize"
-    (nzPageIndexChange)="onPageIndexChange($event)" (nzPageSizeChange)="onPageSizeChange($event)"
-    (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
-    <thead>
-      <tr>
-        <th class="table-header-column" nzWidth="100px" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
-          (nzCheckedChange)="onAllChecked($event)"></th>
-        <th class="table-header-column" nzWidth="350px">Id</th>        
-        <th class="table-header-column" nzWidth="200px">Direction</th>         
-        <th class="table-header-column" nzWidth="200px">Line</th>      
-      </tr>
-    </thead>
-    <tbody>
-      @for (data of rowSelectionTable.data; track data) {
-      <tr>
-        <td class="table-row" [nzChecked]="setOfCheckedId.has(data.id)"
-          (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
-        <td class="table-row">{{ data.id }}</td>        
-        <td class="table-row">{{data.direction.name}}</td>        
-        <td class="table-row">{{data.line.lineCodeRepresentation}}</td>        
-      </tr>
-  
-      }
-    </tbody>
-  </nz-table>
+  <app-create-routes-drawer
+  [selectedItem]="selectedItem" 
+  (onCreate)="createRoutes($event.request)" 
+  (onUpdate)="updateRoute($event.id, $event.request)"
+  ></app-create-routes-drawer>
+  <button
+    *ngIf="setOfCheckedId.size == 1"
+    nz-button
+    nzGhost
+    nzType="primary"
+    (click)="openUpdateDrawer()"
+  >
+    update
+  </button>
+  <button
+    *ngIf="setOfCheckedId.size > 0"
+    nz-button
+    nzDanger
+    nzType="primary"
+    (click)="deleteAllSelected()"
+  >
+    delete
+  </button>
+</div>
+
+<nz-table
+  #rowSelectionTable
+  nzShowSizeChanger
+  [nzData]="routes"
+  [nzScroll]="{ y: '70vh' }"
+  [nzTotal]="totalElements"
+  [nzFrontPagination]="false"
+  [(nzPageIndex)]="page"
+  [(nzPageSize)]="pageSize"
+  (nzPageIndexChange)="onPageIndexChange($event)"
+  (nzPageSizeChange)="onPageSizeChange($event)"
+  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+>
+  <thead>
+    <tr>
+      <th
+        class="table-header-column"
+        nzWidth="100px"
+        [(nzChecked)]="checked"
+        [nzIndeterminate]="indeterminate"
+        (nzCheckedChange)="onAllChecked($event)"
+      ></th>
+      <th class="table-header-column" nzWidth="350px">Id</th>
+      <th class="table-header-column" nzWidth="200px">Direction</th>
+      <th class="table-header-column" nzWidth="200px">Line</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of rowSelectionTable.data; track data) {
+    <tr>
+      <td
+        class="table-row"
+        [nzChecked]="setOfCheckedId.has(data.id)"
+        (nzCheckedChange)="onItemChecked(data.id, $event)"
+      ></td>
+      <td class="table-row">{{ data.id }}</td>
+      <td class="table-row">{{ data.direction.name }}</td>
+      <td class="table-row">{{ data.line.lineCodeRepresentation }}</td>
+    </tr>
+
+    }
+  </tbody>
+</nz-table>

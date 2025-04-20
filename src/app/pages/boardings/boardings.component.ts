@@ -1,4 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { UpdateBoardingRequest } from './../../types/types';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BoardingsService } from '../../services/boardings.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -46,6 +47,9 @@ export class BoardingsComponent implements OnInit {
   indeterminate = false;
   listOfCurrentPageData: readonly GetBoardings_WC_MLS_Response[] = [];
   setOfCheckedId = new Set<string>();
+  selectedItem: GetBoardings_WC_MLS_Response | null = null;
+  @ViewChild(CreateBoardingDrawerComponent)
+  createBoardingDrawer!: CreateBoardingDrawerComponent;
   private _showFilters = false;
   get showFilters(): boolean {
     return this._showFilters;
@@ -99,30 +103,46 @@ export class BoardingsComponent implements OnInit {
       });
   }
 
+  updateSelected(): void {
+    if (this.setOfCheckedId.size !== 1) {
+      return; // Ensure only one item is selected
+    }
+  }
+
+  createBoarding(request: CreateBoarding_WC_MLS_Request): void {
+    this.boardingsService.createBoarding(request).subscribe(() => {
+      this.loadBoardings();
+    });
+  }
+
+  updateBoarding(id: string, request: UpdateBoardingRequest): void {
+    this.boardingsService.update(id, request).subscribe(() => {
+      this.loadBoardings();
+      this.selectedItem = null;
+      this.setOfCheckedId.clear();
+    });
+  }
+
+  openUpdateDrawer(): void {
+    if (this.setOfCheckedId.size === 1) {
+      const selectedId = Array.from(this.setOfCheckedId)[0];
+      this.selectedItem =
+        this.boardings.find((item) => item.id === selectedId) || null;
+
+      if (this.selectedItem) {
+        this.createBoardingDrawer.selectedItem = { ...this.selectedItem }; // Pass selected item properly
+        this.createBoardingDrawer.open();
+      }
+    }
+  }
+
   deleteAllSelected(): void {
     this.setOfCheckedId.forEach((id) => {
       this.boardingsService.deleteBoarding(id).subscribe(() => {
         this.loadBoardings();
       });
     });
-  }
-
-  createBoarding(request: CreateBoarding_WC_MLS_Request): void {
-    this.boardingsService
-      .createBoarding({
-        boardingTime: request.boardingTime,
-        passengerId: request.passengerId,
-        boardingTypeId: request.boardingTypeId,
-        busStopId: request.busStopId,
-        latitude: request.latitude,
-        longitude: request.longitude,
-        passengerType: request.passengerType,
-        tripId: request.tripId,
-      })
-      .subscribe(() => {
-        this.loadBoardings();
-      });
-  }
+  }  
 
   addPassengerId(passengerId: string): void {
     if (passengerId.length === 0) {
@@ -258,6 +278,4 @@ export class BoardingsComponent implements OnInit {
       this.boardingTypeIds = [];
     }
   }
-  
- 
 }

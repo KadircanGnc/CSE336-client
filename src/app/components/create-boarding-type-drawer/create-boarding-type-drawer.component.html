@@ -1,7 +1,12 @@
 <button nz-button nzType="primary" (click)="open()">Create</button>
-<nz-drawer [nzBodyStyle]="{ overflow: 'auto', backgroundColor: `var(--secondary-bg)` }" [nzMaskClosable]="true"
-  [nzWidth]="720" [nzVisible]="visible" nzTitle="Create" [nzFooter]="footerTpl" (nzOnClose)="close()">
-
+<nz-drawer
+  [nzVisible]="visible"
+  nzTitle="{{ selectedItem ? 'Update Boarding Type' : 'Create Boarding Type' }}"
+  (nzOnClose)="close()"
+  [nzWidth]="720"
+  [nzBodyStyle]="{ overflow: 'auto', backgroundColor: `var(--secondary-bg)` }"
+  [nzMaskClosable]="true"
+  [nzFooter]="footerTpl">
   <form nz-form *nzDrawerContent>
     <div nz-col nzSpan="24">
       <div nz-row>
@@ -14,11 +19,12 @@
       </div>
     </div>
   </form>
-
   <ng-template #footerTpl style="background-color: var(--primary-bg);">
     <div style="float: right">
       <button nz-button style="margin-right: 8px;" (click)="close()">Cancel</button>
-      <button nz-button nzType="primary" (click)="submit()" [disabled]="!request.name">Submit</button>
+      <button nz-button nzType="primary" (click)="submit()" [disabled]="!request.name">
+        {{ selectedItem ? 'Update' : 'Create' }}
+      </button>
     </div>
   </ng-template>
 </nz-drawer>

@@ -1,16 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateDepartures_WC_MLS_Request, GetDepartures_WC_MLS_Response, PaginatedResponse } from '../types/types';
+import {
+  CreateDepartures_WC_MLS_Request,
+  GetDepartures_WC_MLS_Response,
+  PaginatedResponse,
+  UpdateDepartureRequest,
+} from '../types/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeparturesService {
-
   private apiUrl = 'http://localhost:8080/api/v1/departures'; // Update with your API URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getDepartures(queryParams?: {
     page?: number;
@@ -27,7 +31,10 @@ export class DeparturesService {
       }
     }
 
-    return this.http.get<PaginatedResponse<GetDepartures_WC_MLS_Response>>(`${this.apiUrl}`, { params });
+    return this.http.get<PaginatedResponse<GetDepartures_WC_MLS_Response>>(
+      `${this.apiUrl}`,
+      { params }
+    );
   }
 
   delete(id: string) {
@@ -36,5 +43,9 @@ export class DeparturesService {
 
   create(request: CreateDepartures_WC_MLS_Request) {
     return this.http.post(`${this.apiUrl}`, request);
+  }
+
+  update(id: string, request: UpdateDepartureRequest) {
+    return this.http.put(`${this.apiUrl}/${id}`, request);
   }
 }

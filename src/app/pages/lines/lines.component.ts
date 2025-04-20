@@ -1,17 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { CreateLinesDrawerComponent } from '../../components/create-lines-drawer/create-lines-drawer.component';
 import { LinesService } from '../../services/lines.service';
-import { CreateLine_WC_MLS_Request, GetLines_WC_MLS_Response } from '../../types/types';
+import {
+  CreateLine_WC_MLS_Request,
+  GetLines_WC_MLS_Response,
+  UpdateLineRequest,
+} from '../../types/types';
 
 @Component({
   selector: 'app-lines',
-  imports: [NzTableModule, NzButtonModule, HttpClientModule, CreateLinesDrawerComponent, CommonModule],
+  imports: [
+    NzTableModule,
+    NzButtonModule,
+    HttpClientModule,
+    CreateLinesDrawerComponent,
+    CommonModule,
+  ],
   templateUrl: './lines.component.html',
-  styleUrl: './lines.component.css'
+  styleUrl: './lines.component.css',
 })
 export class LinesComponent implements OnInit {
   lines: GetLines_WC_MLS_Response[] = [];
@@ -23,24 +33,28 @@ export class LinesComponent implements OnInit {
   indeterminate = false;
   listOfCurrentPageData: readonly GetLines_WC_MLS_Response[] = [];
   setOfCheckedId = new Set<string>();
+  selectedItem: GetLines_WC_MLS_Response | null = null;
+  @ViewChild(CreateLinesDrawerComponent)
+  createLinesDrawer!: CreateLinesDrawerComponent;
 
   ngOnInit(): void {
     this.loadLines();
   }
 
   loadLines(): void {
-    this.linesService.getLines({
-      page: this.page - 1,
-      size: this.pageSize
-    }
-    ).subscribe((data) => {
-      this.lines = data.content;
-      this.totalElements = data.totalElements;
-    });
+    this.linesService
+      .getLines({
+        page: this.page - 1,
+        size: this.pageSize,
+      })
+      .subscribe((data) => {
+        this.lines = data.content;
+        this.totalElements = data.totalElements;
+      });
   }
 
   deleteAllSelected(): void {
-    this.setOfCheckedId.forEach(id => {
+    this.setOfCheckedId.forEach((id) => {
       this.linesService.delete(id).subscribe(() => {
         this.loadLines();
       });
@@ -50,7 +64,15 @@ export class LinesComponent implements OnInit {
   createLine(request: CreateLine_WC_MLS_Request): void {
     this.linesService.create(request).subscribe(() => {
       this.loadLines();
-    })
+    });
+  }
+
+  updateLine(id: string, request: UpdateLineRequest): void {
+    this.linesService.update(id, request).subscribe(() => {
+      this.loadLines();
+      this.selectedItem = null;
+      this.setOfCheckedId.clear();
+    });
   }
 
   updateCheckedSet(id: string, checked: boolean): void {
@@ -67,7 +89,9 @@ export class LinesComponent implements OnInit {
   }
 
   onAllChecked(value: boolean): void {
-    this.listOfCurrentPageData.forEach(item => this.updateCheckedSet(item.id, value));
+    this.listOfCurrentPageData.forEach((item) =>
+      this.updateCheckedSet(item.id, value)
+    );
     this.refreshCheckedStatus();
   }
 
@@ -87,9 +111,31 @@ export class LinesComponent implements OnInit {
   }
 
   refreshCheckedStatus(): void {
-    this.checked = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
-    this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
+    this.checked = this.listOfCurrentPageData.every((item) =>
+      this.setOfCheckedId.has(item.id)
+    );
+    this.indeterminate =
+      this.listOfCurrentPageData.some((item) =>
+        this.setOfCheckedId.has(item.id)
+      ) && !this.checked;
   }
 
+  updateSelected(): void {
+    if (this.setOfCheckedId.size !== 1) {
+      return; // Ensure only one item is selected
+    }
+  }
 
+  openUpdateDrawer(): void {
+    if (this.setOfCheckedId.size === 1) {
+      const selectedId = Array.from(this.setOfCheckedId)[0];
+      this.selectedItem =
+        this.lines.find((item) => item.id === selectedId) || null;
+
+      if (this.selectedItem) {
+        this.createLinesDrawer.selectedItem = { ...this.selectedItem }; // Pass selected item properly
+        this.createLinesDrawer.open();
+      }
+    }
+  }
 }

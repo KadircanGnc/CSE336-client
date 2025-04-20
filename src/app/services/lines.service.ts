@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateLine_WC_MLS_Request, GetLines_WC_MLS_Response, PaginatedResponse } from '../types/types';
+import { CreateLine_WC_MLS_Request, GetLines_WC_MLS_Response, PaginatedResponse, UpdateLineRequest } from '../types/types';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +37,9 @@ export class LinesService {
 
   create(request: CreateLine_WC_MLS_Request) {
     return this.http.post(`${this.apiUrl}`, request);
+  }
+
+  update(id: string, request: UpdateLineRequest) {
+    return this.http.put(`${this.apiUrl}/${id}`, request);
   }
 }
