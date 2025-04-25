@@ -6,8 +6,8 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { CreateBoarding_WC_MLS_Request, GetBoardings_WC_MLS_Response, UpdateBoardingRequest } from '../../types/types';
-import { BoardingTypeSelectComponent } from '../boarding-type-select/boarding-type-select.component';
+import { CreateBoarding_WC_MLS_Request, GetBoardings_WC_MLS_Response, UpdateBoardingRequest } from '../src/app/types/types';
+import { BoardingTypeSelectComponent } from '../src/app/components/boarding-type-select/boarding-type-select.component';
 import dayjs from 'dayjs';
 import { CommonModule } from '@angular/common';
 

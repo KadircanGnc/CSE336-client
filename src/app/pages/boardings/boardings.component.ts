@@ -8,7 +8,7 @@ import {
   GetBoardings_WC_MLS_Response,
 } from '../../types/types';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { CreateBoardingDrawerComponent } from '../../components/create-boarding-drawer/create-boarding-drawer.component';
+import { CreateBoardingDrawerComponent } from '../../../../create-boarding-drawer/create-boarding-drawer.component';
 import { UnixTimestampPipe } from '../../utils/UnixTimestampPipe';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FormsModule } from '@angular/forms';
@@ -34,6 +34,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 })
 export class BoardingsComponent implements OnInit {
   boardings: GetBoardings_WC_MLS_Response[] = [];
+  filteredBoardings: any[] = [];
   totalElements = 0;
   pageSize = 10;
   page = 1;
@@ -82,8 +83,20 @@ export class BoardingsComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.filteredBoardings = [...this.boardings]; // Initially unfiltered
     this.updateFilterOptions();
     this.loadBoardings();
+  }
+
+  
+
+  onFilterChange(): void {
+    // Assume value is the array of selected filter values (e.g., passengerIds)
+    const selectedIds = this.value;
+
+    this.filteredBoardings = this.boardings
+      .filter((item) => selectedIds.includes(item.passengerId)) // Filter logic
+      .sort((a, b) => a.passengerId.localeCompare(b.passengerId)); // Sort alphabetically
   }
 
   loadBoardings(): void {
@@ -142,7 +155,7 @@ export class BoardingsComponent implements OnInit {
         this.loadBoardings();
       });
     });
-  }  
+  }
 
   addPassengerId(passengerId: string): void {
     if (passengerId.length === 0) {

@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import en from '@angular/common/locales/en';
 import { importProvidersFrom } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -11,11 +11,18 @@ import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { icons } from './app/icons-provider';
+import { authInterceptor } from './app/utils/auth.interceptor';
 
 registerLocaleData(en);
 
-
-
 bootstrapApplication(AppComponent, {
-  providers: [importProvidersFrom(HttpClientModule), provideRouter(routes), provideNzIcons(icons), provideNzI18n(en_US), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient()],
+  providers: [
+    importProvidersFrom(HttpClientModule),
+    provideRouter(routes),
+    provideNzIcons(icons),
+    provideNzI18n(en_US),
+    importProvidersFrom(FormsModule),
+    provideAnimationsAsync(),    
+    provideHttpClient(withInterceptors([authInterceptor])),
+  ],
 });

@@ -225,4 +225,12 @@ export type UpdateBoardingRequest = {
   boardingTypeId: string;
 };
 
+export type UserDto = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  login: string;    
+  token: string;
+};
+
 

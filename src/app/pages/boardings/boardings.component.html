@@ -49,7 +49,7 @@
     <nz-table
       #rowSelectionTable
       nzShowSizeChanger
-      [nzData]="boardings"
+      [nzData]="showFilters ? filteredBoardings : boardings"
       [nzScroll]="{ y: '70vh' }"
       [nzTotal]="totalElements"
       [nzFrontPagination]="false"
@@ -116,7 +116,7 @@
     <nz-checkbox-group
       [nzOptions]="options"
       [(ngModel)]="value"
-      (ngModelChange)="updateSingleChecked()"
+      (ngModelChange)="onFilterChange()"
     ></nz-checkbox-group>
     <!-- <div>PassengerIds</div>
     <div>passengerTypes</div>

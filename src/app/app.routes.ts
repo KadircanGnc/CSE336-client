@@ -9,6 +9,9 @@ import { RoutesComponent } from './pages/routes/routes.component';
 import { DepartureDaysComponent } from './pages/departure-days/departure-days.component';
 import { DeparturesComponent } from './pages/departures/departures.component';
 import { PointsComponent } from './pages/points/points.component';
+import { SignupFormComponent } from './pages/signup-form/signup-form.component';
+import { FormArrayComponent } from './components/form-array/form-array.component';
+import { LoginFormComponent } from './pages/login-form/login-form.component';
 
 
 export const routes: Routes = [
@@ -22,5 +25,8 @@ export const routes: Routes = [
   { path: 'routes', component: RoutesComponent },
   { path: 'departure-days', component: DepartureDaysComponent },
   { path: 'departures', component: DeparturesComponent },
-  { path: 'points', component: PointsComponent }
+  { path: 'points', component: PointsComponent },
+  { path: 'signup', component: SignupFormComponent },
+  { path: 'form-array', component: FormArrayComponent },
+  { path: 'app-login-form', component: LoginFormComponent},    
 ];
