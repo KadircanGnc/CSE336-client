@@ -9,24 +9,23 @@ import { RoutesComponent } from './pages/routes/routes.component';
 import { DepartureDaysComponent } from './pages/departure-days/departure-days.component';
 import { DeparturesComponent } from './pages/departures/departures.component';
 import { PointsComponent } from './pages/points/points.component';
-import { SignupFormComponent } from './pages/signup-form/signup-form.component';
 import { FormArrayComponent } from './components/form-array/form-array.component';
 import { LoginFormComponent } from './pages/login-form/login-form.component';
+import { AuthGuard } from './utils/auth.guard';
 
 
 export const routes: Routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'boardings', component: BoardingsComponent },
-  { path: 'boarding-types', component: BoardingTypeComponent},
-  { path: 'bus-stops', component: BusStopComponent },
-  { path: 'lines', component: LinesComponent },
-  { path: 'directions', component: DirectionsComponent },
-  { path: 'routes', component: RoutesComponent },
-  { path: 'departure-days', component: DepartureDaysComponent },
-  { path: 'departures', component: DeparturesComponent },
-  { path: 'points', component: PointsComponent },
-  { path: 'signup', component: SignupFormComponent },
-  { path: 'form-array', component: FormArrayComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'boardings', component: BoardingsComponent, canActivate: [AuthGuard] },
+  { path: 'boarding-types', component: BoardingTypeComponent, canActivate: [AuthGuard] },
+  { path: 'bus-stops', component: BusStopComponent, canActivate: [AuthGuard] },
+  { path: 'lines', component: LinesComponent, canActivate: [AuthGuard] },
+  { path: 'directions', component: DirectionsComponent, canActivate: [AuthGuard] },
+  { path: 'routes', component: RoutesComponent, canActivate: [AuthGuard] },
+  { path: 'departure-days', component: DepartureDaysComponent, canActivate: [AuthGuard] },
+  { path: 'departures', component: DeparturesComponent, canActivate: [AuthGuard] },
+  { path: 'points', component: PointsComponent, canActivate: [AuthGuard] },  
+  { path: 'form-array', component: FormArrayComponent, canActivate: [AuthGuard] },
   { path: 'app-login-form', component: LoginFormComponent},    
 ];

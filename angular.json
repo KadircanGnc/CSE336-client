@@ -29,11 +29,18 @@
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
               }
             ],
+            
             "styles": [
               "src/theme.less",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           },
@@ -91,7 +98,8 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           }
@@ -101,5 +109,7 @@
   },
   "cli": {
     "analytics": "aae5cb1f-b692-4a35-b12d-1b5effc8a79c"
-  }
+  } 
+  
 }
+

@@ -86,10 +86,14 @@
               name="firstName"
               class="form-control"
               [(ngModel)]="firstName"
+              #firstNameInput="ngModel"
+              required
             />
             <label class="form-label" for="firstName">First name</label>
           </div>
-
+          <div *ngIf="firstNameInput.invalid && firstNameInput.touched" class="text-danger">
+            <small *ngIf="firstNameInput.errors?.['required']">First name is required.</small>
+          </div>
           <div class="form-outline mb-4">
             <input
               type="text"
@@ -97,10 +101,14 @@
               name="lastName"
               class="form-control"
               [(ngModel)]="lastName"
+              #lastNameInput="ngModel"
+              required
             />
             <label class="form-label" for="lastName">Last name</label>
           </div>
-
+          <div *ngIf="lastNameInput.invalid && lastNameInput.touched" class="text-danger">
+            <small *ngIf="lastNameInput.errors?.['required']">Last name is required.</small>
+          </div>
           <div class="form-outline mb-4">
             <input
               type="text"
@@ -108,8 +116,13 @@
               name="login"
               class="form-control"
               [(ngModel)]="login"
+              #usernameInput="ngModel"
+              required
             />
             <label class="form-label" for="login">Username</label>
+            <div *ngIf="usernameInput.invalid && usernameInput.touched" class="text-danger">
+              <small *ngIf="usernameInput.errors?.['required']">Username is required.</small>
+            </div>
           </div>
 
           <div class="form-outline mb-4">
@@ -119,11 +132,18 @@
               name="password"
               class="form-control"
               [(ngModel)]="password"
+              #passwordRegisterInput="ngModel"
+              required
+              minlength="3"
             />
             <label class="form-label" for="registerPassword">Password</label>
+            <div *ngIf="passwordRegisterInput.invalid && passwordRegisterInput.touched" class="text-danger">
+              <small *ngIf="passwordRegisterInput.errors?.['required']">Password is required.</small>
+              <small *ngIf="passwordRegisterInput.errors?.['minlength']">Password must be at least 3 characters long.</small>
+            </div>
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block mb-3">
+          <button type="submit" class="btn btn-primary btn-block mb-3" [disabled]="registerForm.invalid">
             Register
           </button>
         </form>

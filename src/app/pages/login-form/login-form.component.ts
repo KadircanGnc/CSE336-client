@@ -1,15 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { EventEmitter, Component, Output } from '@angular/core';
+import { CommonModule, NgIf } from '@angular/common';
+import { EventEmitter, Component, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserDto } from '../../types/types';
+import { AuthService } from '../../services/auth.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
-@Injectable({
-  providedIn: 'root',
-})
+//@Injectable({
+//  providedIn: 'root',
+//})
 @Component({
   selector: 'app-login-form',
+  standalone: true,
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css'],
   imports: [CommonModule, FormsModule],
@@ -25,7 +29,10 @@ export class LoginFormComponent {
   password: string = '';
   loginError: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private message: NzMessageService = inject(NzMessageService);
 
   onLoginTab(): void {
     this.active = 'login';
@@ -37,6 +44,11 @@ export class LoginFormComponent {
     this.loginError = null;
   }
 
+  onLoginSuccess(token: string) {
+    this.authService.login(token); // <- trigger login
+    this.router.navigate(['/dashboard']);
+  }
+
   onSubmitLogin(): void {
     this.loginError = null;
 
@@ -45,7 +57,9 @@ export class LoginFormComponent {
       (response: UserDto) => {
         const token = response.token;
 
-        localStorage.setItem('auth_token', token);
+        // Call the login method from AuthService to store the token
+        this.onLoginSuccess(token);
+        //localStorage.setItem('auth_token', token);
 
         console.log('Login successful:', response);
         console.log('Token saved:', token);
@@ -55,6 +69,7 @@ export class LoginFormComponent {
         );
 
         this.onSubmitLoginEvent.emit(response);
+        this.router.navigate(['/dashboard']);
       },
       (error) => {
         if (error.error?.message) {
@@ -69,26 +84,35 @@ export class LoginFormComponent {
   }
 
   onSubmitRegister(): void {
-    const registerData = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      login: this.login,
-      password: this.password,
-    };
-    this.http.post('http://localhost:8080/register', registerData).subscribe(
-      (response) => {
-        console.log('Registration successful:', response);
-        this.onSubmitLoginEvent.emit(response);
-      },
-      (error) => {
-        console.error('Registration failed:', error);
-      }
-    );
-    this.onSubmitRegisterEvent.emit({
-      firstName: this.firstName,
-      lastName: this.lastName,
-      login: this.login,
-      password: this.password,
-    });
+    if (this.firstName && this.lastName && this.login && this.password) {
+      const registerData = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        login: this.login,
+        password: this.password,
+      };
+      this.http.post('http://localhost:8080/register', registerData).subscribe(
+        (response) => {
+          console.log('Registration successful:', response);
+          this.onSubmitLoginEvent.emit(response);
+          this.message.success('Successfully registered! Please log in.'); // show success toast
+          this.active = 'login'; // switch to login tab
+        },
+        (error) => {
+          if (error.error?.message === 'Login already exists') {
+            this.message.error('Username already exists'); // <-- show validation error
+          } else {
+            this.message.error('Registration failed. Please try again.');
+          }
+          console.error('Registration failed:', error);
+        }
+      );
+      this.onSubmitRegisterEvent.emit({
+        firstName: this.firstName,
+        lastName: this.lastName,
+        login: this.login,
+        password: this.password,
+      });
+    }
   }
 }

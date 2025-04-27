@@ -1,5 +1,6 @@
 <nz-layout class="app-layout">
   <nz-sider
+    *ngIf="loggedIn"
     class="menu-sidebar"
     nzCollapsible
     nzWidth="256px"
@@ -43,10 +44,7 @@
           </li>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/points">Points</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/signup">Sign Up</a>
-          </li>
+          </li>          
 
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/form-array">Form Array</a>
@@ -66,7 +64,8 @@
         <h1></h1>
       </div>
       <div class="header-right">
-        <a routerLink="/app-login-form" class="login-link">Login</a>
+        <a *ngIf="!loggedIn" routerLink="/app-login-form" class="login-link">Login</a>
+        <a *ngIf="loggedIn" (click)="logout()" class="login-link" style="cursor: pointer; color: red;">Logout</a>
       </div>
     </nz-header>
     <nz-content>
